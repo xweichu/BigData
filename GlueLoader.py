@@ -161,7 +161,7 @@ class DaskData(BaseCartesianData):
             x = da.from_zarr('/mnt/cephfs/zarr_data_full')
             f = 1500
             scale = 2
-
+            # Scale doesn't really work here as it's an argument. So here I use rg.
             rg = [0,1]
             lh = []
             for k in rg:
