@@ -3,7 +3,8 @@ from glue.core.component_id import ComponentID
 from glue.core.data import BaseCartesianData
 from glue.utils import view_shape
 from dask.distributed import Client
-
+from glue.core import DataCollection
+from glue.app.qt.application import GlueApplication
 
 class DaskData(BaseCartesianData):
 
@@ -145,8 +146,6 @@ class DaskData(BaseCartesianData):
         return result     
 
 
-
-
     def compute_histogram(self, cids,
                           range=None, bins=None, log=False,
                           subset_state=None, subset_group=None):
@@ -159,7 +158,6 @@ class DaskData(BaseCartesianData):
         def get_histogram():
             import dask.array as da
             import numpy as np
-
             x = da.from_zarr('/mnt/cephfs/zarr_data_full')
             f = 0
             scale = 10
@@ -184,11 +182,7 @@ class DaskData(BaseCartesianData):
         return result
 
 
-
-from glue.core import DataCollection
-from glue.app.qt.application import GlueApplication
 client = Client('128.104.222.103:8786')
-
 d = DaskData(client)
 dc = DataCollection([d])
 ga = GlueApplication(dc)
