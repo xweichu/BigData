@@ -19,7 +19,7 @@ class DaskData(BaseCartesianData):
     
     @property
     def shape(self):
-        return (2560, 2560, 2560)
+        return (512, 512, 512)
 
     @property
     def main_components(self):
@@ -43,8 +43,8 @@ class DaskData(BaseCartesianData):
             import numpy as np
             from glue.utils import view_shape
             x = da.from_zarr('/mnt/cephfs/zarr_data_full')
-            f = 0
-            scale = 10
+            f = 1500
+            scale = 2
 
             lh = []
             for k in range(scale):
@@ -112,8 +112,8 @@ class DaskData(BaseCartesianData):
             import numpy as np
             from glue.utils import view_shape
             x = da.from_zarr('/mnt/cephfs/zarr_data_full')
-            f = 0
-            scale = 10
+            f = 1500
+            scale = 2
 
             lh = []
             for k in range(scale):
@@ -159,9 +159,10 @@ class DaskData(BaseCartesianData):
             import dask.array as da
             import numpy as np
             x = da.from_zarr('/mnt/cephfs/zarr_data_full')
-            f = 0
-            scale = 10
-            rg = [0,1,2,3,4,5,6,7,8,9]
+            f = 1500
+            scale = 2
+
+            rg = [0,1]
             lh = []
             for k in rg:
                 lc = []
