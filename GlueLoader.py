@@ -50,6 +50,8 @@ class DaskData(BaseCartesianData):
             f = 1500
             scale = 2
 
+            #Construct the data graph. No computations involve for now. 
+            #Only access part of the data for the purpose of demo. 
             lh = []
             for k in range(scale):
                 lc = []
@@ -64,11 +66,14 @@ class DaskData(BaseCartesianData):
 
             if view != None:
                 z = z[view]
-
+            
+            #fire the actual computation
             z = z.compute()
             return z
 
         future = client.submit(load_ceph_data, view)
+
+        #wait for the results
         result = future.result()
         return result 
 
@@ -76,29 +81,6 @@ class DaskData(BaseCartesianData):
         print("get mask triggered")
         return subset_state.to_mask(self, view=view)
 
-
-    # def compute_statistic(self, statistic, cid,
-    #                       axis=None, finite=True,
-    #                       positive=False, subset_state=None,
-    #                       percentile=None, random_subset=None):
-
-    #     if statistic == 'minimum':
-    #         return 0 #da.min(z,axis).compute()
-    #     elif statistic == 'maximum':
-    #         return 1 #da.max(z,axis).compute()
-    #     elif statistic == 'mean' or statistic == 'median':
-    #         return 0.5 #da.mean(z,axis).compute()
-    #     elif statistic == 'percentile':
-    #         return percentile/100
-    #         # return da.percentile(z,percentile)
-    #     elif statistic == 'sum':
-    #         return self.size/2 #da.sum(z.axis).compute()
-
-    #         # final_shape = tuple(self.shape[i] for i in range(self.ndim)
-    #         #                     if i not in axis)
-    #         # return np.random.random(final_shape)
-    #         # return 0
-    #     return 0
 
     def compute_statistic(self, statistic, cid,
                           axis=None, finite=True,
