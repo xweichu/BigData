@@ -36,6 +36,10 @@ class DaskData(BaseCartesianData):
         from dask.distributed import Client
         import dask.delayed
         import dask.array as da
+
+        if cid in self.pixel_component_ids:
+            return super(DaskData, self).get_data(cid, view=view)
+            
         client = self.client
 
         def load_ceph_data(view):
